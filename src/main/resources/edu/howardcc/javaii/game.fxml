@@ -12,10 +12,35 @@
             <Font name="Courier New Bold" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" onMouseClicked="#setGreetingLabelText" prefHeight="27.0" prefWidth="300.0" text="Click for Greeting" wrapText="true">
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="300.0" wrapText="true">
          <font>
-            <Font name="Courier New Bold" size="13.0" />
+            <Font name="Courier New Bold" size="20.0" />
          </font>
       </Label>
+      <Button fx:id="resetChipsButton" layoutX="338.0" layoutY="14.0" mnemonicParsing="false" onAction="#resetChips" text="Reset Chips">
+         <font>
+            <Font name="Courier New Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="currentChipsLabel" layoutX="14.0" layoutY="363.0" prefHeight="23.0" prefWidth="150.0" text="Chips: ">
+         <font>
+            <Font name="Courier New Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="dealButton" layoutX="474.0" layoutY="327.0" mnemonicParsing="false" onAction="#deal" text="Deal&#10;(Bet 10)" textAlignment="CENTER">
+         <font>
+            <Font name="Courier New Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="hitButton" layoutX="204.0" layoutY="309.0" mnemonicParsing="false" onAction="#hit" text="Hit" textAlignment="CENTER">
+         <font>
+            <Font name="Courier New Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="standButton" layoutX="306.0" layoutY="308.0" mnemonicParsing="false" onAction="#stand" text="Stand" textAlignment="CENTER">
+         <font>
+            <Font name="Courier New Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

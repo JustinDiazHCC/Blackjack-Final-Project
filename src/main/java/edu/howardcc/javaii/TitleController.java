@@ -3,42 +3,29 @@ package edu.howardcc.javaii;
 import edu.howardcc.javaii.jCards.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
 public class TitleController {
 
-    @FXML
-    private Button aboutButton;
-
-    @FXML
-    private ImageView blackjackIcon;
-
+    // name text field
     @FXML
     private TextField nameTextField;
 
-    @FXML
-    private Button playButton;
-
-    @FXML
-    private Label subtitle;
-
-    @FXML
-    private Label title;
-
+    // to game screen
     @FXML
     void startGame(ActionEvent event) throws IOException {
+        // only start if there is an entry in the name field
         if (!nameTextField.getText().equals("")) {
-            BlackjackLogic.player = new Player(nameTextField.getText());
-            App.setRoot("game");
+            // instantiate Player object
+            BJLogic.player = new Player(nameTextField.getText());
+            Blackjack.setRoot("game");
         }
     }
 
+    // to about screen
     public void aboutPage(ActionEvent actionEvent) throws IOException {
-        App.setRoot("about");
+        Blackjack.setRoot("about");
     }
 }

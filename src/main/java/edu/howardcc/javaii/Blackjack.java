@@ -10,9 +10,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * Blackjack.java
+ * A JavaFX app that runs a GUI Blackjack game
+ *
+ * @author Justin Diaz
+ * @version 1.0
  */
-public class App extends Application {
+public class Blackjack extends Application {
 
     private static Scene scene;
 
@@ -20,7 +24,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("title"), 640, 480);
         stage.setTitle("Blackjack!");
-        stage.getIcons().add(new Image(App.class.getResourceAsStream("black-jack-icon.png")));
+        stage.getIcons().add(new Image(Blackjack.class.getResourceAsStream("black-jack-icon.png")));
         stage.setScene(scene);
         stage.show();
     }
@@ -30,7 +34,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Blackjack.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
