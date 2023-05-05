@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.howardcc.javaii.AboutController">
+<VBox alignment="CENTER" prefHeight="406.0" prefWidth="519.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.howardcc.javaii.AboutController">
     <children>
-        <Label text="About" />
-        <Button fx:id="backButton" text="Back to Title Screen" onAction="#backToTitle" />
+        <Label text="About">
+         <font>
+            <Font name="Courier New Bold" size="30.0" />
+         </font></Label>
+      <Label fx:id="aboutText" accessibleRole="SCROLL_BAR" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="479.0" text="Thank you for playing Blackjack!" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="Courier New" size="13.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrollBox" pannable="true" prefHeight="227.0" prefWidth="40.0">
+         <content>
+            <Label fx:id="sourcesLabel" prefHeight="306.0" prefWidth="466.0" text="Title Screen Image Source: https://blog.retentionx.com/blackjack-crash-course-how-to-count-cards/&#10;jCards External Library: https://github.com/lyudaio/jcards&#10;&#10;jCards License/Copyright Notice: The MIT License (MIT)&#10;Copyright (c) 2023 lyudaio&#10;&#10;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is&#10;furnished to do so, subject to the following conditions:&#10;&#10;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&#10;&#10;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&#10;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE." textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font name="Courier New" size="10.0" />
+               </font>
+            </Label>
+         </content>
+      </ScrollPane>
+        <Button fx:id="backButton" alignment="BOTTOM_CENTER" onAction="#backToTitle" text="Back to Title Screen">
+         <font>
+            <Font name="Courier New Bold" size="14.0" />
+         </font></Button>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
