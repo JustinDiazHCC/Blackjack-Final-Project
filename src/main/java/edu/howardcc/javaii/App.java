@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,7 +18,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("title"), 640, 480);
+        stage.setTitle("Blackjack!");
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("black-jack-icon.png")));
         stage.setScene(scene);
         stage.show();
     }
