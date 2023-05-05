@@ -10,9 +10,9 @@ package edu.howardcc.javaii.jCards;
 public enum Rank {
 
     /**
-     * Represents the Ace card with a value of 1 and symbol of "\uD83C\uDCA1".
+     * Represents the Ace card with a value of 11 and symbol of "\uD83C\uDCA1".
      */
-    ACE(1, "\uD83C\uDCA1", "M22.864 24h-3.401l-2.353-6.69H6.73L4.377 24h-3.24L9.873 0h4.255zm-6.737-9.43L11.92 2.79 7.697 14.57z"),
+    ACE(11, "\uD83C\uDCA1", "M22.864 24h-3.401l-2.353-6.69H6.73L4.377 24h-3.24L9.873 0h4.255zm-6.737-9.43L11.92 2.79 7.697 14.57z"),
 
     /**
      * Represents the Two card with a value of 2 and symbol of "\uD83C\uDCA2".

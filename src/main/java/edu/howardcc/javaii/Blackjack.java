@@ -42,5 +42,4 @@ public class Blackjack extends Application {
         launch();
     }
 
-
 }

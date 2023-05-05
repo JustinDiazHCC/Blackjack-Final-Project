@@ -12,7 +12,7 @@
             <Font name="Courier New Bold" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="300.0" wrapText="true">
+      <Label fx:id="winConditionLabel" layoutX="183.0" layoutY="272.0" prefHeight="27.0" prefWidth="245.0" wrapText="true">
          <font>
             <Font name="Courier New Bold" size="20.0" />
          </font>
@@ -42,5 +42,10 @@
             <Font name="Courier New Bold" size="20.0" />
          </font>
       </Button>
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="315.0" wrapText="true">
+         <font>
+            <Font name="Courier New Bold Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

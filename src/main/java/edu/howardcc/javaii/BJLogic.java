@@ -2,10 +2,199 @@ package edu.howardcc.javaii;
 
 import edu.howardcc.javaii.jCards.*;
 
+/**
+ * Controls the Blackjack game logic
+ */
 public class BJLogic {
     public static Player player;
-    public static Player dealer = new Player("The Dealer");
+    public static Player dealer = new Player("Dealer");
     public static int chips = 150;
+    public static Deck deck = new Deck();
 
+    // game condition flags
+    public static boolean roundEndConditionMet;
+    public static boolean isBlackjack;
+    public static boolean isDealerBlackjack;
+    public static boolean isBust;
+    public static boolean isDealerBust;
 
+    // begins a round of Blackjack
+    public static void deal() {
+        // instantiate a new deck
+        deck = new Deck();
+
+        // shuffle deck
+        deck.shuffle();
+
+        // deduct player bet from chip amount
+        chips -= 10;
+
+        // reset flags to false;
+        roundEndConditionMet = false;
+        isBlackjack = false;
+        isDealerBlackjack = false;
+        isBust = false;
+        isDealerBust = false;
+
+        // deal two cards to player and dealer
+        player.addCard(deck.deal());
+        dealer.addCard(deck.deal());
+        player.addCard(deck.deal());
+        dealer.addCard(deck.deal());
+
+        /**
+         * Print player and dealer hands
+         */
+        System.out.println("Action: deal");
+        System.out.printf("Player hand: %s%nDealer hand: %s%n%n", player.getHand().toString(), dealer.getHand().toString());
+        System.out.printf("Player hand value: %d%nDealer hand value: %d%n%n", getHandValue(player), getHandValue(dealer));
+    }
+
+    // checks for player or dealer blackjack, sets flags accordingly
+    public static void checkBlackjack() {
+        // reset blackjack flags
+        isBlackjack = false;
+        isDealerBlackjack = false;
+
+        // check player hand value
+        int handValue = getHandValue(player);
+        if (handValue == 21) {
+            isBlackjack = true;
+        }
+
+        // check dealer hand value
+        int dealerHandValue = getHandValue(dealer);
+        if (dealerHandValue == 21) {
+            isDealerBlackjack = true;
+        }
+
+        // automatically get results if player blackjack and not dealer blackjack
+        if (isBlackjack && !isDealerBlackjack) {
+            roundEndConditionMet = true;
+        }
+        // automatically get results if player and dealer blackjack
+        if (isBlackjack && isDealerBlackjack) {
+            roundEndConditionMet = true;
+        }
+        // automatically get results if dealer blackjack and not player blackjack
+        if (isDealerBlackjack && !isBlackjack) {
+            roundEndConditionMet = true;
+        }
+    }
+
+    // adds a card to the player's hand
+    public static void hit() {
+        // deal player a card from the deck
+        player.addCard(deck.deal());
+
+        /**
+         * Print player and dealer hands
+         */
+        System.out.println("Action: hit");
+        System.out.printf("Player hand: %s%nDealer hand: %s%n%n", player.getHand().toString(), dealer.getHand().toString());
+        System.out.printf("Player hand value: %d%nDealer hand value: %d%n%n", getHandValue(player), getHandValue(dealer));
+
+        // check for player bust
+        checkBust();
+    }
+
+    // checks for player bust (hand value exceeding 21)
+    public static void checkBust() {
+        // reset bust flag
+        isBust = false;
+
+        // check hand value
+        int handValue = getHandValue(player);
+        if (handValue > 21) {
+            isBust = true;
+            roundEndConditionMet = true;
+        }
+    }
+
+    // after player stops drawing cards, the dealer then draws cards until they hit hard 17
+    public static void stand() {
+        // reset dealer bust flag
+        isDealerBust = false;
+
+        int dealerHandValue;
+        do {
+            // get dealer hand value
+            dealerHandValue = getHandValue(dealer);
+            // dealer draws cards until they have 17
+            if (dealerHandValue < 17) {
+                dealer.addCard(deck.deal());
+            }
+        } while (dealerHandValue < 17);
+        if (dealerHandValue > 21) {
+            isDealerBust = true;
+        }
+        roundEndConditionMet = true;
+
+        /**
+         * Print player and dealer hands
+         */
+        System.out.println("Action: stand");
+        System.out.printf("Player hand: %s%nDealer hand: %s%n%n", player.getHand().toString(), dealer.getHand().toString());
+        System.out.printf("Player hand value: %d%nDealer hand value: %d%n%n", getHandValue(player), getHandValue(dealer));
+    }
+
+    // determines round result and return win/lose/push string
+    public static String getResult() {
+        // get player hand value
+        int handValue = getHandValue(player);
+        // get dealer hand value
+        int dealerHandValue = getHandValue(dealer);
+
+        // check win conditions
+        // award player double their bet in chips if win, return bet if push, and do nothing if lose
+        if (isBlackjack && !isDealerBlackjack) {
+            chips += 25;
+            clearHands();
+            return "win";
+        } else if (!isBlackjack && isDealerBlackjack) {
+            clearHands();
+            return "lose";
+        } else if (isBlackjack && isDealerBlackjack) {
+            chips += 10;
+            clearHands();
+            return "push";
+        } else if (isBust) {
+            clearHands();
+            return "lose";
+        } else if (isDealerBust) {
+            chips += 20;
+            clearHands();
+            return "win";
+        } else if (handValue > dealerHandValue) {
+            chips += 20;
+            clearHands();
+            return "win";
+        } else if (handValue < dealerHandValue) {
+            clearHands();
+            return "lose";
+        } else {
+            // hand values must be equal and non bust/blackjack if else condition is met
+            chips += 10;
+            clearHands();
+            return "push";
+        }
+    }
+
+    public static int getHandValue(Player player) {
+        int handValue = 0;
+        for (Card card : player.getHand().getCards()) {
+            handValue = handValue + card.getRank().getValue();
+            // if hand value exceeds 21 but has an ace in the hand, change ace value from 11 to 1
+            if (handValue > 21 && card.getRank().getValue() == 11) {
+                handValue -= 10;
+            }
+        }
+        return handValue;
+    }
+
+    // clear user and dealer hands
+    public static void clearHands() {
+        player.getHand().getCards().clear();
+        dealer.getHand().getCards().clear();
+    }
 }
