@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Blackjack.java
@@ -24,7 +25,7 @@ public class Blackjack extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("title"), 640, 480);
         stage.setTitle("Blackjack!");
-        stage.getIcons().add(new Image(Blackjack.class.getResourceAsStream("black-jack-icon.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("black-jack-icon.png"))));
         stage.setScene(scene);
         stage.show();
     }

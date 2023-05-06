@@ -8,7 +8,7 @@ import edu.howardcc.javaii.jCards.*;
 public class BJLogic {
     public static Player player;
     public static Player dealer = new Player("Dealer");
-    public static int chips = 150;
+    public static int chips = 100;
     public static Deck deck = new Deck();
 
     // game condition flags
@@ -115,7 +115,9 @@ public class BJLogic {
         if (handValue > 21) {
             isBust = true;
             roundEndConditionMet = true;
-        }
+        } else if (handValue == 21)
+            // stand automatically is player hits to 21
+            stand();
     }
 
     // after player stops drawing cards, the dealer then draws cards until they hit hard 17

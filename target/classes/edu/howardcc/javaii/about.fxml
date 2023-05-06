@@ -13,7 +13,7 @@
          <font>
             <Font name="Courier New Bold" size="30.0" />
          </font></Label>
-      <Label fx:id="aboutText" accessibleRole="SCROLL_BAR" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="479.0" text="Thank you for playing Blackjack!" textOverrun="CLIP" wrapText="true">
+      <Label fx:id="aboutText" accessibleRole="SCROLL_BAR" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="479.0" text="Thank you for playing Blackjack! :)" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Courier New" size="13.0" />
          </font>
