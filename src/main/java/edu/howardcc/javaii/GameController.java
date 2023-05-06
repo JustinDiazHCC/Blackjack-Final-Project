@@ -1,6 +1,5 @@
 package edu.howardcc.javaii;
 
-import edu.howardcc.javaii.jCards.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,10 +12,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class GameController {
-
-    // card table grid pane
-    @FXML
-    private GridPane cardTable;
 
     // labels
     @FXML
@@ -95,6 +90,12 @@ public class GameController {
         playerHandLabel.setVisible(false);
         dealerHandLabel.setVisible(false);
         nameLabel.setText("Hi, " + BJLogic.player.getName() + "!");
+
+        // set and display chips amount
+        BJLogic.chips = 100;
+        currentChipsLabel.setText("Chips: " + BJLogic.chips);
+        currentChipsLabel.setVisible(true);
+        dealButton.setVisible(true);
     }
 
     // quit back to title screen
@@ -107,12 +108,8 @@ public class GameController {
     @FXML
     void resetChips(ActionEvent event) {
         // set chips value and set chips label text according to the value
-        BJLogic.chips = 150;
+        BJLogic.chips = 100;
         currentChipsLabel.setText("Chips: " + BJLogic.chips);
-
-        // make currentChips visible if this is the first chip reset
-        currentChipsLabel.setVisible(true);
-        dealButton.setVisible(true);
     }
 
     // Blackjack control methods
@@ -159,7 +156,7 @@ public class GameController {
         currentChipsLabel.setText("Chips: " + BJLogic.chips);
 
         // display hand value amounts
-        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player) + "\nDealer hand value: ?");
+        handValuesLabel.setText("Dealer hand value: ?\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
 
         // check for blackjacks
         BJLogic.checkBlackjack();
@@ -180,7 +177,7 @@ public class GameController {
         updateCardDisplayDealerFaceDown();
 
         // display hand value amounts
-        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player) + "\nDealer hand value: ?");
+        handValuesLabel.setText("Dealer hand value: ?\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
 
         // get result if round end condition is met
         if (BJLogic.roundEndConditionMet) {
@@ -198,8 +195,8 @@ public class GameController {
         updateCardDisplayRoundOver();
 
         // display hand value amounts
-        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player)
-                + "\nDealer hand value: " + BJLogic.getHandValue(BJLogic.dealer));
+        handValuesLabel.setText("Dealer hand value: " + BJLogic.getHandValue(BJLogic.dealer)
+                + "\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
 
         // get result if round end condition is met
         if (BJLogic.roundEndConditionMet) {
@@ -211,8 +208,8 @@ public class GameController {
 
     public void getResult() {
         // display hand value amounts
-        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player)
-                + "\nDealer hand value: " + BJLogic.getHandValue(BJLogic.dealer));
+        handValuesLabel.setText("Dealer hand value: " + BJLogic.getHandValue(BJLogic.dealer)
+                + "\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
 
         // call getResult method
         String result = BJLogic.getResult();
@@ -288,19 +285,19 @@ public class GameController {
 
         // display any other dealer cards up through a potential seven if they exist
         if (BJLogic.dealer.getHand().getCards().size() > 2) {
-            playerCard3.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(2).toString() + ".png"))));
+            dealerCard3.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(2).toString() + ".png"))));
         }
         if (BJLogic.dealer.getHand().getCards().size() > 3) {
-            playerCard4.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(3).toString() + ".png"))));
+            dealerCard4.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(3).toString() + ".png"))));
         }
         if (BJLogic.dealer.getHand().getCards().size() > 4) {
-            playerCard5.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(4).toString() + ".png"))));
+            dealerCard5.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(4).toString() + ".png"))));
         }
         if (BJLogic.dealer.getHand().getCards().size() > 5) {
-            playerCard6.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(5).toString() + ".png"))));
+            dealerCard6.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(5).toString() + ".png"))));
         }
         if (BJLogic.dealer.getHand().getCards().size() > 6) {
-            playerCard7.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(6).toString() + ".png"))));
+            dealerCard7.setImage(new Image(Objects.requireNonNull(Blackjack.class.getResourceAsStream("playing-cards/" + BJLogic.dealer.getHand().getCards().get(6).toString() + ".png"))));
         }
 
         // display the two guaranteed cards in player hand

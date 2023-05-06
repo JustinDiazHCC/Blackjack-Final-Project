@@ -6,9 +6,10 @@ import edu.howardcc.javaii.jCards.*;
  * Controls the Blackjack game logic
  */
 public class BJLogic {
+    // instance variables
     public static Player player;
     public static Player dealer = new Player("Dealer");
-    public static int chips = 100;
+    public static int chips;
     public static Deck deck = new Deck();
 
     // game condition flags
@@ -125,15 +126,13 @@ public class BJLogic {
         // reset dealer bust flag
         isDealerBust = false;
 
-        int dealerHandValue;
-        do {
+        int dealerHandValue = getHandValue(dealer);
+        while (dealerHandValue < 17) {
+            // dealer draws cards until they have 17
+            dealer.addCard(deck.deal());
             // get dealer hand value
             dealerHandValue = getHandValue(dealer);
-            // dealer draws cards until they have 17
-            if (dealerHandValue < 17) {
-                dealer.addCard(deck.deal());
-            }
-        } while (dealerHandValue < 17);
+        }
         if (dealerHandValue > 21) {
             isDealerBust = true;
         }
@@ -198,11 +197,21 @@ public class BJLogic {
         int handValue = 0;
         for (Card card : player.getHand().getCards()) {
             handValue = handValue + card.getRank().getValue();
-            // if hand value exceeds 21 but has an ace in the hand, change ace value from 11 to 1
-            if (handValue > 21 && card.getRank().getValue() == 11) {
-                handValue -= 10;
+        }
+        // return handValue if 21 or under
+        if (handValue <= 21) {
+            return handValue;
+        } else {
+            // if hand value exceeds 21, iterate through cards to see if there is an ace in the hand
+            for (Card card : player.getHand().getCards()) {
+                if (card.getRank().getValue() == 11) {
+                    // if there is an ace in the hand, change handValue from 11 to 1
+                    handValue -= 10;
+                    return handValue;
+                }
             }
         }
+        // otherwise, return busted hand value
         return handValue;
     }
 
