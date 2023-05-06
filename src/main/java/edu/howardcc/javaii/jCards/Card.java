@@ -50,7 +50,7 @@ public class Card implements Comparable<Card> {
     public Suit getSuit() {
         return suit;
     }
-    
+
 
     /**
      * Returns a string representation of the card.

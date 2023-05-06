@@ -10,6 +10,7 @@ public class BJLogic {
     public static Player player;
     public static Player dealer = new Player("Dealer");
     public static int chips;
+    public static int bet;
     public static Deck deck = new Deck();
 
     // game condition flags
@@ -33,7 +34,7 @@ public class BJLogic {
             getResult();
         } else {
             // deduct player bet from chip amount
-            chips -= 10;
+            chips -= bet;
 
             // reset flags to false;
             roundEndConditionMet = false;
@@ -161,25 +162,26 @@ public class BJLogic {
         // check win conditions
         // award player double their bet in chips if win, return bet if push, and do nothing if lose
         if (isBlackjack && !isDealerBlackjack) {
-            chips += 25;
+            // blackjack pays 3:2
+            chips += (bet * 2) + (bet / 2);
             clearHands();
             return "win";
         } else if (!isBlackjack && isDealerBlackjack) {
             clearHands();
             return "lose";
         } else if (isBlackjack && isDealerBlackjack) {
-            chips += 10;
+            chips += bet;
             clearHands();
             return "push";
         } else if (isBust) {
             clearHands();
             return "lose";
         } else if (isDealerBust) {
-            chips += 20;
+            chips += bet * 2;
             clearHands();
             return "win";
         } else if (handValue > dealerHandValue) {
-            chips += 20;
+            chips += bet * 2;
             clearHands();
             return "win";
         } else if (handValue < dealerHandValue) {
@@ -187,7 +189,7 @@ public class BJLogic {
             return "lose";
         } else {
             // hand values must be equal and non bust/blackjack if else condition is met
-            chips += 10;
+            chips += bet;
             clearHands();
             return "push";
         }

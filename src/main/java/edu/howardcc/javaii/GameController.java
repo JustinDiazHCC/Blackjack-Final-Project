@@ -4,14 +4,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Objects;
 
 public class GameController {
+
+    // text field
+    @FXML
+    private TextField betTextField;
 
     // labels
     @FXML
@@ -115,57 +120,70 @@ public class GameController {
     // Blackjack control methods
     @FXML
     void deal(ActionEvent event) {
-        // clear all cards that may currently be on display
-        // dealer cards
-        dealerCard1.setImage(null);
-        dealerCard2.setImage(null);
-        dealerCard3.setImage(null);
-        dealerCard4.setImage(null);
-        dealerCard5.setImage(null);
-        dealerCard6.setImage(null);
-        dealerCard7.setImage(null);
-        // player cards
-        playerCard1.setImage(null);
-        playerCard2.setImage(null);
-        playerCard3.setImage(null);
-        playerCard4.setImage(null);
-        playerCard5.setImage(null);
-        playerCard6.setImage(null);
-        playerCard7.setImage(null);
+        try {
+            // set bet amount
+            int bet = Integer.parseInt(betTextField.getText());
+            if (bet > 10) {
+                BJLogic.bet = bet;
+            }
 
-        // hide deal button, win condition label, and reset chips button when round begins
-        dealButton.setVisible(false);
-        winConditionLabel.setVisible(false);
-        resetChipsButton.setVisible(false);
+            // clear all cards that may currently be on display
+            // dealer cards
+            dealerCard1.setImage(null);
+            dealerCard2.setImage(null);
+            dealerCard3.setImage(null);
+            dealerCard4.setImage(null);
+            dealerCard5.setImage(null);
+            dealerCard6.setImage(null);
+            dealerCard7.setImage(null);
+            // player cards
+            playerCard1.setImage(null);
+            playerCard2.setImage(null);
+            playerCard3.setImage(null);
+            playerCard4.setImage(null);
+            playerCard5.setImage(null);
+            playerCard6.setImage(null);
+            playerCard7.setImage(null);
 
-        // redisplay hit and stand buttons now that round is beginning
-        hitButton.setVisible(true);
-        standButton.setVisible(true);
+            // hide deal button, bet text field, win condition label, and reset chips button when round begins
+            dealButton.setVisible(false);
+            betTextField.setVisible(false);
+            winConditionLabel.setVisible(false);
+            resetChipsButton.setVisible(false);
 
-        // display dealer hand and player hand labels now that round is beginning
-        playerHandLabel.setVisible(true);
-        dealerHandLabel.setVisible(true);
+            // redisplay hit and stand buttons now that round is beginning
+            hitButton.setVisible(true);
+            standButton.setVisible(true);
 
-        // deal cards
-        BJLogic.deal();
+            // display dealer hand and player hand labels now that round is beginning
+            playerHandLabel.setVisible(true);
+            dealerHandLabel.setVisible(true);
 
-        // update card table display
-        updateCardDisplayDealerFaceDown();
+            // deal cards
+            BJLogic.deal();
 
-        // display chip amount to reflect bet deduction
-        currentChipsLabel.setText("Chips: " + BJLogic.chips);
-
-        // display hand value amounts
-        handValuesLabel.setText("Dealer hand value: ?\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
-
-        // check for blackjacks
-        BJLogic.checkBlackjack();
-
-        // get results if round end condition is met
-        if (BJLogic.roundEndConditionMet) {
             // update card table display
-            updateCardDisplayRoundOver();
-            getResult();
+            updateCardDisplayDealerFaceDown();
+
+            // display chip amount to reflect bet deduction
+            currentChipsLabel.setText("Chips: " + BJLogic.chips);
+
+            // display hand value amounts
+            handValuesLabel.setText("Dealer hand value: ?\nYour hand value: " + BJLogic.getHandValue(BJLogic.player));
+
+            // check for blackjacks
+            BJLogic.checkBlackjack();
+
+            // get results if round end condition is met
+            if (BJLogic.roundEndConditionMet) {
+                // update card table display
+                updateCardDisplayRoundOver();
+                getResult();
+            }
+        } catch (InputMismatchException e) {
+            System.err.println("Enter a bet with a minimum of 10.");
+        } catch (NumberFormatException e) {
+            System.err.println("Enter a bet with a minimum of 10.");
         }
     }
 
@@ -243,6 +261,7 @@ public class GameController {
 
         // display results
         dealButton.setVisible(true);
+        betTextField.setVisible(false);
         winConditionLabel.setVisible(true);
 
         // redisplay reset chips button now that round has ended

@@ -2,7 +2,7 @@ package edu.howardcc.javaii.jCards;
 
 /**
  * The Player class represents a player in a card game.
- *
+ * <p>
  * This class makes use of the Card and Hand classes to keep track of a player's cards and hand, respectively.
  * It includes methods for adding a card to the player's hand, showing the player's hand, and discarding a card.
  *
