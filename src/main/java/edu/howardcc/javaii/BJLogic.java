@@ -17,6 +17,7 @@ public class BJLogic {
     public static boolean isDealerBlackjack;
     public static boolean isBust;
     public static boolean isDealerBust;
+    public static boolean isTooBrokeToPlay;
 
     // begins a round of Blackjack
     public static void deal() {
@@ -26,28 +27,34 @@ public class BJLogic {
         // shuffle deck
         deck.shuffle();
 
-        // deduct player bet from chip amount
-        chips -= 10;
+        if (chips < 10) {
+            isTooBrokeToPlay = true;
+            getResult();
+        } else {
+            // deduct player bet from chip amount
+            chips -= 10;
 
-        // reset flags to false;
-        roundEndConditionMet = false;
-        isBlackjack = false;
-        isDealerBlackjack = false;
-        isBust = false;
-        isDealerBust = false;
+            // reset flags to false;
+            roundEndConditionMet = false;
+            isBlackjack = false;
+            isDealerBlackjack = false;
+            isBust = false;
+            isDealerBust = false;
+            isTooBrokeToPlay = false;
 
-        // deal two cards to player and dealer
-        player.addCard(deck.deal());
-        dealer.addCard(deck.deal());
-        player.addCard(deck.deal());
-        dealer.addCard(deck.deal());
+            // deal two cards to player and dealer
+            player.addCard(deck.deal());
+            dealer.addCard(deck.deal());
+            player.addCard(deck.deal());
+            dealer.addCard(deck.deal());
 
-        /**
-         * Print player and dealer hands
-         */
-        System.out.println("Action: deal");
-        System.out.printf("Player hand: %s%nDealer hand: %s%n%n", player.getHand().toString(), dealer.getHand().toString());
-        System.out.printf("Player hand value: %d%nDealer hand value: %d%n%n", getHandValue(player), getHandValue(dealer));
+            /**
+             * Print player and dealer hands
+             */
+            System.out.println("Action: deal");
+            System.out.printf("Player hand: %s%nDealer hand: %s%n%n", player.getHand().toString(), dealer.getHand().toString());
+            System.out.printf("Player hand value: %d%nDealer hand value: %d%n%n", getHandValue(player), getHandValue(dealer));
+        }
     }
 
     // checks for player or dealer blackjack, sets flags accordingly
@@ -140,6 +147,11 @@ public class BJLogic {
 
     // determines round result and return win/lose/push string
     public static String getResult() {
+        // first check if we got here because player is too broke to continue
+        if (isTooBrokeToPlay) {
+            return "broke";
+        }
+
         // get player hand value
         int handValue = getHandValue(player);
         // get dealer hand value

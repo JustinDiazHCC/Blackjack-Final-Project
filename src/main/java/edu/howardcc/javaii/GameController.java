@@ -17,6 +17,12 @@ public class GameController {
     private Label currentChipsLabel;
     @FXML
     private Label winConditionLabel;
+    @FXML
+    private Label handValuesLabel;
+    @FXML
+    private Label playerHandLabel;
+    @FXML
+    private Label dealerHandLabel;
 
     // Blackjack control buttons
     @FXML
@@ -34,6 +40,8 @@ public class GameController {
         dealButton.setVisible(false);
         hitButton.setVisible(false);
         standButton.setVisible(false);
+        playerHandLabel.setVisible(false);
+        dealerHandLabel.setVisible(false);
         nameLabel.setText("Hi, " + BJLogic.player.getName() + "!");
     }
 
@@ -67,11 +75,18 @@ public class GameController {
         hitButton.setVisible(true);
         standButton.setVisible(true);
 
+        // display dealer hand and player hand labels now that round is beginning
+        playerHandLabel.setVisible(true);
+        dealerHandLabel.setVisible(true);
+
         // deal cards
         BJLogic.deal();
 
         // display chip amount to reflect bet deduction
         currentChipsLabel.setText("Chips: " + BJLogic.chips);
+
+        // display hand value amounts
+        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player) + "\nDealer hand value: ?");
 
         // check for blackjacks
         BJLogic.checkBlackjack();
@@ -83,6 +98,8 @@ public class GameController {
     @FXML
     void hit(ActionEvent event) {
         BJLogic.hit();
+        // display hand value amounts
+        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player) + "\nDealer hand value: ?");
         if (BJLogic.roundEndConditionMet) {
             getResult();
         }
@@ -91,12 +108,19 @@ public class GameController {
     @FXML
     void stand(ActionEvent event) {
         BJLogic.stand();
+        // display hand value amounts
+        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player)
+                + "\nDealer hand value: " + BJLogic.getHandValue(BJLogic.dealer));
         if (BJLogic.roundEndConditionMet) {
             getResult();
         }
     }
 
     public void getResult() {
+        // display hand value amounts
+        handValuesLabel.setText("Your hand value: " + BJLogic.getHandValue(BJLogic.player)
+                + "\nDealer hand value: " + BJLogic.getHandValue(BJLogic.dealer));
+
         // call getResult method
         String result = BJLogic.getResult();
 
@@ -118,6 +142,9 @@ public class GameController {
                 winConditionLabel.setText("Push. One more hand?");
                 currentChipsLabel.setText("Chips: " + BJLogic.chips);
                 break;
+            case "broke":
+                winConditionLabel.setText("Too broke to play...");
+                currentChipsLabel.setText("Chips: " + BJLogic.chips);
         }
 
         // hide hit and stand buttons
